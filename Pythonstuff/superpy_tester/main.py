@@ -70,7 +70,10 @@ def main():
 
 
     ##########################################################################################################################################
+    #Exporter
+    export_parser = subparsers.add_parser('export', help='use this to export certain data')
 
+    export_parser.add_argument('-bought', help='use this to export all bought data to today')
     #Parse arguments
     args = parser.parse_args()
 
@@ -90,6 +93,9 @@ def main():
                     change_date(args.set_date)
                  except ValueError:
                      raise ValueError("Incorrect data format, should be YYYY-MM-DD")
+    elif args.command == 'export':
+        export_bought()
+        print(f'Export has been created in the following folder : C:/Pythontester/superpy_tester/bought_exports. \nIf folder does not exist one will be made.')
     else:
         pass
 
