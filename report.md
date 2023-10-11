@@ -17,7 +17,8 @@ rich.Table & rich.Console
 5.Show all sold products.
 6.Export bought or sold list.
 7.time travel(set_date) to give you more options when to register bought or sold products and see certain reports of different time stamps.
-8.Show Revenue, losses or profit made in certain date ranges or a graphical overview for selected year.
+8.advance time or go back in time by entering a positive number to advance time or a negative number to go back in time (the number represents days)
+9.Show Revenue, losses or profit made in certain date ranges or a graphical overview for selected year.
 
 All above functions are descriped in the usage_guide.txt
 
@@ -44,7 +45,8 @@ Function 7. is the backbone function of the app:
     def export_unsold(): 
     The export of unsold products is a handy side file to check what is not yet sold. And if desired this export can also be made of expired products! (not yet programmed into the CLI app.)
 
-8. has two important functions:
+
+8. profit has two important functions:
     1. will show you the expenses,revenue and profit of a desired date range.
     def profit(start_date, end_date):
     2. shows a line graph which shows the profit or losses you have per month over the selected year.

@@ -12,7 +12,8 @@ For function 8. you probably need to install module : matplotlib.pyplot & numpy
 5.Show all sold products.
 6.Export bought or sold list.
 7.time travel(set_date) to give you more options when to register bought or sold products and see certain reports of different time stamps.
-8.Show Revenue, losses or profit made in certain date ranges or a graphical overview for selected year.
+8.advance time or go back in time by entering a positive number to advance time or a negative number to go back in time (the number represents days)
+9.Show Revenue, losses or profit made in certain date ranges or a graphical overview for selected year.
 
 0.How to run the app
 Run your CLI like Windows powershell.
@@ -65,7 +66,13 @@ recommended is before you start using the app to always use py .\super.py set_da
 The date will show almost with every action you do inside the ClI. to remind you on what date your registering and showing reports.
 for more help use py .\super.py set_date -h.
 
-8.Show Revenue, losses or profit made in certain date ranges or a graphical overview for selected year.
+8.advance time (advance_time)
+Use this function to go back or advance in time by entering a number, the number represents days.
+a positive number advances your app into time as example : py .\super.py advance_time 2 to go 2 days further into time start date = 2023.10.05 new date = 2023.10.07 
+When you enter a negative number like -2 the new date would have been 2023.10.03.
+for more help use py .\super.py advance_time -h
+
+9.Show Revenue, losses or profit made in certain date ranges or a graphical overview for selected year.
 use py .\super.py profit start_date(YYYY-MM-DD) end_date(YYYY-MM-DD)
 as example py .\super.py profit 2023-01-01 2023-12-31
 This will show expenses, revenue and profit from 01 January 2023 to 31 December 2023.
@@ -75,6 +82,4 @@ To see a yearly financial overview you can use:
 py .\super.py graph YYYY
 as example : py .\super.py graph 2023 to see the a financial graph of that year.
 for more help use py .\super.py graph -h.
-
-
 

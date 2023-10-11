@@ -1,9 +1,9 @@
 from datetime import date
 import csv
-from functions_read import *
+from Functions.functions_read import *
 from rich.console import Console
 from pathlib import *
-from settings import *
+from Functions.settings import *
 
  ##########################################################################################################################################
  #csv write functions
@@ -16,7 +16,7 @@ def buy_product(product_name, buy_price, expiration_date,buy_date):
 
   product_name.lower()
 
-  with open('bought.csv', 'a', newline='') as file:
+  with open('data/bought.csv', 'a', newline='') as file:
     fieldnames = ['id',
                   'product_name',
                   'buy_price',
@@ -34,35 +34,47 @@ def buy_product(product_name, buy_price, expiration_date,buy_date):
     print(f'Product has been registered in bought.csv with the following purchase date: {buy_date}')
 
 
+
 #to register sold products to the sold.csv file
-def sell_product(bought_id, sell_price,sell_date):
+def sell_product(product, sell_price):
     
+    today_sell = date_today()
+    sold = sold_boughtid()
+
+    boughtlist = bought_list_raw()
+    theid = []
     
-    with open('sold.csv', 'r', newline='') as readfile:
-       reader = csv.DictReader(readfile)
-       bids = []
 
-       for row in reader:
-          bids.append(int(row['bought_id']))
+    ###########
+    #Piece of code to decide if there is stock for the selected product
+    for row in boughtlist:
+      if row['buy_date'] <= date_today():
+         if row['expiration_date'] >= date_today():
+            if product == row['product_name']:
+               if row['id'] not in sold:
+                  theid.append(row['id'])
+   ###########
 
-
-    with open('sold.csv', 'a', newline='') as file:
+    with open('data/sold.csv', 'a', newline='') as file:
       fieldnames = ['id',
                     'bought_id',
                     'sell_price',
-                    'sell_date']
-      add = {
-        'id' : sold_id(),
-        'bought_id' : bought_id,
-        'sell_price' : sell_price,
-        'sell_date' : sell_date}
-      csv_writer = csv.DictWriter(file,fieldnames=fieldnames)
-
-      if bought_id not in bids: 
-        csv_writer.writerow(add)
-        print(f"Product has been registered in sold.csv with todays date: {sell_date}")
+                    'sell_date',
+                    ]
+      if theid == []:
+         print("No stock available, please try another product or use 'inventory -now now' to check what currently is available on stock.")
       else:
-         print("Bought id already in sold list please try another one")
+         add = {
+         'id' : sold_id(),
+         'bought_id' : theid[0],
+         'sell_price' : sell_price,
+         'sell_date' : today_sell,
+         }
+         print(f"product has been registered with a sold date of {today_sell} and with a price of {sell_price}.")
+         csv_writer = csv.DictWriter(file,fieldnames=fieldnames)
+         csv_writer.writerow(add)
+
+
 
 #Exports a list of registered bought products to 'todays date'
 def export_bought():
@@ -71,7 +83,7 @@ def export_bought():
    path.mkdir(parents=True, exist_ok=True)
 
 
-   with open('bought.csv', 'r', newline = '') as file:
+   with open('data/bought.csv', 'r', newline = '') as file:
       csv_reader = csv.DictReader(file)
       rows = list(csv_reader)
 
@@ -98,7 +110,7 @@ def export_sold():
    path = Path.cwd() / "exports/sold_exports"
    path.mkdir(parents=True, exist_ok=True)
 
-   with open('sold.csv', 'r', newline = '') as file:
+   with open('data/sold.csv', 'r', newline = '') as file:
       csv_reader = csv.DictReader(file)
       rows = list(csv_reader)
 
@@ -124,7 +136,7 @@ def export_unsold():
     path.mkdir(parents=True, exist_ok=True)
 
 
-    with open('bought.csv', 'r', newline = '') as file:
+    with open('data/bought.csv', 'r', newline = '') as file:
       csv_reader = csv.DictReader(file)
       rows = list(csv_reader)
 

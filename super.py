@@ -1,10 +1,10 @@
 # Imports
 from argparse import *
 import csv
-from functions_write import *
-from functions_read import *
+from Functions.functions_write import *
+from Functions.functions_read import *
 from datetime import date
-from settings import *
+from Functions.settings import *
 
 # Do not change these lines.
 __winc_id__ = "a2bc36ea784242e4989deb157d527ba0"
@@ -40,7 +40,7 @@ def main():
 
 
     #Sold options
-    sold_parser.add_argument('bought_id',type = int, help = 'fill in the bought id here as int')
+    sold_parser.add_argument('product_name',type = str, help = 'fill in the bought id here as int')
     sold_parser.add_argument('sell_price', type = float, help = 'fill in a number as float')
 
     ##########################################################################################################################################
@@ -68,7 +68,9 @@ def main():
 
     graph_parser.add_argument('year', help='enter a year in the following format : YYYY')
     ##########################################################################################################################################
+    advance_time_parser = subparsers.add_parser('advance_time', help='use this function to advance/or go back in time by entering a number which represents days')
 
+    advance_time_parser.add_argument('advance_time',type=int, help='Enter a number to advance that amount of days into the future or use - before the number to go back in time.')
     ##########################################################################################################################################
     #time_travel sub_parser
     time_travel_parser = subparsers.add_parser(
@@ -78,6 +80,7 @@ def main():
 
     #Time travel options
     time_travel_parser.add_argument('set', help='to set date to today or manual entered date.')
+
     ##########################################################################################################################################
     #Export sub_parser
     export_parser = subparsers.add_parser('export', help='use this function to export certain data use "export -h" for more help.')
@@ -94,7 +97,7 @@ def main():
     if args.command == 'bought':
         buy_product(args.product_name.lower(), args.buy_price, args.expiration_date,date_today())
     elif args.command == 'sold':
-        sell_product(args.bought_id, args.sell_price, date_today())
+        sell_product(args.product_name, args.sell_price)
     elif args.command == 'inventory':
         if args.now == 'now':
             console.print(inventory_list())
@@ -113,6 +116,8 @@ def main():
                     change_date(args.set)
                 except ValueError:
                     raise ValueError("Incorrect date format, please use the following format: YYYY-MM-DD")
+    if args.command == 'advance_time':
+        advance_date(args.advance_time)
     if args.command == 'export':
         if args.bought == 'bought':
             export_bought()
@@ -129,4 +134,4 @@ def main():
 if __name__ == "__main__":
     console = Console()
     main()
-    print(f'use -h for a list of commands, current date is set to {date_today()}')
+    print(f'use -h for a list of commands, current date is set to {date_today()}.')

@@ -2,7 +2,7 @@ from datetime import date
 import csv
 from rich.table import Table
 from rich.console import Console
-from settings import *
+from Functions.settings import *
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -15,7 +15,7 @@ def bought_id():
 
     id_list = []
 
-    with open('bought.csv', 'r', newline = '') as file:
+    with open('data/bought.csv', 'r', newline = '') as file:
         csv_reader = csv.DictReader(file)
         rows = list(csv_reader)
         for row in rows:      
@@ -31,7 +31,7 @@ def sold_id():
 
     id_list = []
 
-    with open('sold.csv', 'r', newline = '') as file:
+    with open('data/sold.csv', 'r', newline = '') as file:
         csv_reader = csv.DictReader(file)
         rows = list(csv_reader)
         for row in rows:
@@ -45,7 +45,7 @@ def sold_id():
 #Shows current inventory and filters out sold and expired items.
 def inventory_list():
      
-     with open('bought.csv', 'r', newline = '') as file:
+     with open('data/bought.csv', 'r', newline = '') as file:
          csv_reader = csv.reader(file)
          next(csv_reader)
          list = []
@@ -88,7 +88,7 @@ def bought_list():
      table.add_column('expired', justify='center',style='red')
      table.add_column('sold',justify='center',style='green')
 
-     with open('bought.csv', 'r', newline = '') as file:
+     with open('data/bought.csv', 'r', newline = '') as file:
          csv_reader = csv.reader(file)
          next(csv_reader, None)
 
@@ -106,6 +106,17 @@ def bought_list():
 
      return table
 
+def bought_list_raw():
+     
+
+
+     with open('data/bought.csv', 'r', newline = '') as file:
+         next
+         csv_reader = csv.DictReader(file)
+         rows = list(csv_reader)
+
+     return rows
+
 
 def sold_list():
 
@@ -115,7 +126,7 @@ def sold_list():
      table.add_column("sell price", justify="center", style="magenta")
      table.add_column("sell date", justify="center", style="magenta")
 
-     with open('sold.csv', 'r', newline = '') as file:
+     with open('data/sold.csv', 'r', newline = '') as file:
          reader = csv.reader(file)
          next(reader, None)
 
@@ -130,7 +141,7 @@ def sold_boughtid():
      
      list = []
 
-     with open('sold.csv', 'r', newline = '') as file:
+     with open('data/sold.csv', 'r', newline = '') as file:
          reader = csv.reader(file)
          next(reader, None)
 
@@ -140,6 +151,20 @@ def sold_boughtid():
 
      return list
 
+def bought_id_list():
+
+    bought_id_list = []
+
+    with open('data/bought.csv', 'r', newline = '') as file:
+        reader = csv.DictReader(file)
+        rows = list(reader)
+
+        for row in rows:
+            bought_id_list.append(row['id'])
+    
+
+    return bought_id_list
+
 #Shows profit of selected date range.
 def profit(start_date, end_date):
 
@@ -148,14 +173,14 @@ def profit(start_date, end_date):
     start_date = str(date.fromisoformat(start_date))
     end_date = str(date.fromisoformat(end_date))
     
-    with open('bought.csv', 'r', newline = '') as buy_file:
+    with open('data/bought.csv', 'r', newline = '') as buy_file:
         buy_reader = csv.DictReader(buy_file)
 
         for row in buy_reader:
             if row['buy_date'] >= start_date and row['buy_date'] <= end_date:
                 buy_list.append(float(row['buy_price']))
 
-    with open('sold.csv', 'r', newline = '') as sell_file:
+    with open('data/sold.csv', 'r', newline = '') as sell_file:
         sold_reader = csv.DictReader(sell_file)
 
         for row in sold_reader:
@@ -207,14 +232,14 @@ def profit_only(start_date, end_date):
     start_date = str(date.fromisoformat(start_date))
     end_date = str(date.fromisoformat(end_date))
     
-    with open('bought.csv', 'r', newline = '') as buy_file:
+    with open('data/bought.csv', 'r', newline = '') as buy_file:
         buy_reader = csv.DictReader(buy_file)
 
         for row in buy_reader:
             if row['buy_date'] >= start_date and row['buy_date'] <= end_date:
                 buy_list.append(float(row['buy_price']))
 
-    with open('sold.csv', 'r', newline = '') as sell_file:
+    with open('data/sold.csv', 'r', newline = '') as sell_file:
         sold_reader = csv.DictReader(sell_file)
 
         for row in sold_reader:
