@@ -36,11 +36,11 @@ def main():
     ##########################################################################################################################################
     #Sold sub_parser
     sold_parser = subparsers.add_parser(
-        "sold", help='Use this function to register sold articles in the following order : 1.bought id, 2.sell price')
+        "sold", help='Use this function to register sold articles in the following order : 1.product name, 2.sell price')
 
 
     #Sold options
-    sold_parser.add_argument('product_name',type = str, help = 'fill in the bought id here as int')
+    sold_parser.add_argument('product_name',type = str, help = 'fill in a product you want to sell')
     sold_parser.add_argument('sell_price', type = float, help = 'fill in a number as float')
 
     ##########################################################################################################################################
