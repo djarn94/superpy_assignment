@@ -29,8 +29,8 @@ Note : register date is linked to 7.set_date
 
 2.Register all sold products
 To register sold products use:
-py .\super.py sold 'bought id' 'sell price'
-as example : py .\super.py sold 1 1.25
+py .\super.py sold 'product name' 'sell price'
+as example : py .\super.py sold apple 1.25
 for more help use 'py .\super.py sold -h' in your CLI
 Note : register date is linked to 7.set_date
 
